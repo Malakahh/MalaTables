@@ -11,6 +11,6 @@ template<typename T> struct TableData : public BaseTableData {
 
 template<typename T> std::ostream& operator<<(std::ostream& s, const TableData<T>& td)
 {
-	s << "hi";
+	s << td.data;
 	return s;
 }

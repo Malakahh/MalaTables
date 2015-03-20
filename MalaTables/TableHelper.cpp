@@ -12,5 +12,5 @@ template <typename T> void AddToTable(Table &t, T item){
 
 	std::unordered_map<int, BaseTableData*>::const_iterator got = t.map.find(1);
 	TableData<T>* td = (TableData<T>*)got->second;
-	std::cout << td->data << std::endl;
+	std::cout << *td << std::endl;
 }
