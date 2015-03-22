@@ -33,7 +33,7 @@ public:
 		return Retrieve<V>(s.str());
 	}
 
-	template <typename V> void Add(std::string key, V value)
+	template <typename V> void Insert(std::string key, V value)
 	{
 		TableData<V>* tableData = new TableData<V>;
 		tableData->data = value;
@@ -42,11 +42,11 @@ public:
 		keys.push_back(key);
 	}
 
-	template <typename V> void Add(int key, V value)
+	template <typename V> void Insert(int key, V value)
 	{
 		std::ostringstream s;
 		s << key;
-		Add<V>(s.str(), value);
+		Insert<V>(s.str(), value);
 	}
 };
 

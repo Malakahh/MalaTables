@@ -3,9 +3,9 @@
 
 void Test(Table &t)
 {
-	std::cout << "Adding" << std::endl;
-	t.Add<std::string>(1, "test");
-	t.Add<int>("testies", 555555);
+	std::cout << "Inserting" << std::endl;
+	t.Insert<std::string>(1, "test");
+	t.Insert<int>("testies", 555555);
 
 	std::cout << "Checking if key exists.." << std::endl;
 	if (t.KeyExists(1))
