@@ -21,3 +21,9 @@ bool Table::KeyExists(int key)
 	s << key;
 	return KeyExists(s.str());
 }
+
+void Table::GetKeys(std::vector<std::string> &keyVector)
+{
+	std::vector<std::string> k(keys);
+	keyVector = k;
+}
