@@ -21,13 +21,36 @@ void Test(Table &t)
 	}
 
 	std::cout << std::endl << "Testing GetKeys..." << std::endl;
-	std::vector<std::string> keyss;
+	std::list<std::string> keyss;
 	t.GetKeys(keyss);
 	for (auto k : keyss)
 	{
 		std::cout << "key: " << k << std::endl;
 	}
 
+	std::cout << std::endl << "Testing remove..." << std::endl;
+	t.Insert<int>(-1, -1);
+	std::cout << "added additional key, printing keys..." << std::endl;
+	std::list<std::string> preR;
+	t.GetKeys(preR);
+	for (auto k : preR)
+	{
+		std::cout << "key: " << k << std::endl;
+	}
+	std::cout << "Attempting to remove key" << std::endl;
+	t.Remove(-1);
+	std::cout << "printing keys post remove..." << std::endl;
+	std::list<std::string> postR;
+	t.GetKeys(postR);
+	for (auto k : postR)
+	{
+		std::cout << "key: " << k << std::endl;
+	}
+	std::cout << "Key exists: " << t.KeyExists(-1) << std::endl;
+
+
+
+	std::cout << std::endl << std::endl;
 	std::system("pause");
 }
 

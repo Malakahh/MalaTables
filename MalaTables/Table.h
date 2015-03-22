@@ -9,14 +9,17 @@ class Table
 {
 private:
 	std::unordered_map<std::string, BaseTableData*> map; //Using a BaseTableData pointer to avoid slicing
-	std::vector<std::string> keys;
+	std::list<std::string> keys;
 public:
 	Table();
 	~Table();
 
 	bool KeyExists(std::string key);
 	bool KeyExists(int key);
-	void GetKeys(std::vector<std::string> &keyVector);
+	void GetKeys(std::list<std::string> &keyVector);
+	void Remove(std::string key);
+	void Remove(int key);
+	void RemoveAll();
 
 	template <typename V> V Retrieve(std::string key)
 	{
@@ -37,6 +40,11 @@ public:
 	{
 		TableData<V>* tableData = new TableData<V>;
 		tableData->data = value;
+
+		if (KeyExists(key))
+		{
+			Remove(key);
+		}
 
 		map.insert({ key, tableData });
 		keys.push_back(key);

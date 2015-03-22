@@ -22,8 +22,32 @@ bool Table::KeyExists(int key)
 	return KeyExists(s.str());
 }
 
-void Table::GetKeys(std::vector<std::string> &keyVector)
+void Table::GetKeys(std::list<std::string> &keyVector)
 {
-	std::vector<std::string> k(keys);
+	std::list<std::string> k(keys);
 	keyVector = k;
+}
+
+void Table::Remove(std::string key)
+{
+	delete map[key];
+	map.erase(key);
+	keys.remove(key);
+}
+
+void Table::Remove(int key)
+{
+	std::ostringstream s;
+	s << key;
+	Remove(s.str());
+}
+
+void Table::RemoveAll()
+{
+	std::list<std::string> k;
+	GetKeys(k);
+	for (std::string key : k)
+	{
+		Remove(key);
+	}
 }
