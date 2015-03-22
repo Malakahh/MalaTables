@@ -17,7 +17,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Table.cpp" />
     <ClCompile Include="TableData.cpp" />
-    <ClCompile Include="TableHelper.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3AF8BCBD-9732-462D-B09C-556A66DBBC96}</ProjectGuid>

@@ -1,10 +1,16 @@
 #include "Table.h"
-#include "TableHelper.cpp"
 #include <iostream>
 
 int main() {
 	Table t;
-	AddToTable(t, 888);
+	
+	std::string s;
+	t.Add<std::string>(1, "test");
+	if (t.KeyExists<std::string>(1))
+		std::cout << "value: " << t.Retrieve<std::string>(1) << std::endl;
+	else
+		std::cout << "Key doesn't exist" << std::endl;
+
 	std::system("pause");
 
 	return 0;
