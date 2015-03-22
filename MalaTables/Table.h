@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MALATABLES_TABLE
+#define MALATABLES_TABLE
+
 #include <sstream>
 #include <unordered_map>
 #include "TableData.cpp"
@@ -11,24 +13,14 @@ public:
 	Table();
 	~Table();
 
-	template <typename V> bool KeyExists(std::string key)
-	{
-		return map.count(key) > 0;
-	}
-
-	template <typename V> bool KeyExists(int key)
-	{
-		std::ostringstream s;
-		s << key;
-		return KeyExists<V>(s.str());
-	}
+	bool KeyExists(std::string key);
+	bool KeyExists(int key);
 
 	template <typename V> V Retrieve(std::string key)
 	{
 		std::unordered_map<std::string, BaseTableData*>::const_iterator got = map.find(key);
 		TableData<V>* td = (TableData<V>*)got->second;
 		V data = td->data;
-		delete td;
 		return data;
 	}
 
@@ -55,3 +47,4 @@ public:
 	}
 };
 
+#endif

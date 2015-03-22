@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MALATABLES_TABLEDATA
+#define MALATABLES_TABLEDATA
+
 #include <iostream>
 
 struct BaseTableData {
@@ -13,3 +15,5 @@ template<typename T> std::ostream& operator<<(std::ostream& s, const TableData<T
 	s << td.data;
 	return s;
 }
+
+#endif
