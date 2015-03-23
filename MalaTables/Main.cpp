@@ -1,40 +1,13 @@
 #include "Table.h"
+#include "Test.cpp"
 #include <iostream>
 
-void Test(Table &t)
-{
-	std::cout << "Adding" << std::endl;
-	t.Add<std::string>(1, "test");
-	t.Add<int>("testies", 555555);
-
-	std::cout << "Checking if key exists.." << std::endl;
-	if (t.KeyExists(1))
-	{
-		std::cout << "Key exist! Printing value twice..." << std::endl;
-
-		std::cout << "value: " << t.Retrieve<std::string>(1) << std::endl;
-		std::cout << "value: " << t.Retrieve<std::string>(1) << std::endl;
-	}
-	else
-	{
-		std::cout << "Key doesn't exist" << std::endl;
-	}
-
-	std::cout << std::endl << "Testing GetKeys..." << std::endl;
-	std::vector<std::string> keyss;
-	t.GetKeys(keyss);
-	for (auto k : keyss)
-	{
-		std::cout << "key: " << k << std::endl;
-	}
-
-	std::system("pause");
-}
-
 int main() {
-	Table test;
 
-	Test(test);
+	Test();
+
+	std::cout << std::endl << std::endl;
+	std::system("pause");
 
 	return 0;
 }
