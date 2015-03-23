@@ -21,6 +21,12 @@ public:
 	void Remove(int key);
 	void RemoveAll();
 
+	/*Table operator+(Table& t);
+	Table operator+=(Table& t);
+	Table operator-(Table& t);
+	Table operator-=(Table& t);	*/
+	friend std::ostream& operator<<(std::ostream& s, const Table& table);
+
 	template <typename V> V Retrieve(std::string key)
 	{
 		std::unordered_map<std::string, BaseTableData*>::const_iterator got = map.find(key);

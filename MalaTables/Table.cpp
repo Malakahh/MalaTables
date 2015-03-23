@@ -1,5 +1,5 @@
 #include "Table.h"
-
+#include "TableData.cpp"
 
 Table::Table()
 {
@@ -8,6 +8,7 @@ Table::Table()
 
 Table::~Table()
 {
+	RemoveAll();
 }
 
 bool Table::KeyExists(std::string key)
@@ -30,7 +31,7 @@ void Table::GetKeys(std::list<std::string> &keyVector)
 
 void Table::Remove(std::string key)
 {
-	delete map[key];
+	//delete map[key];
 	map.erase(key);
 	keys.remove(key);
 }
@@ -50,4 +51,22 @@ void Table::RemoveAll()
 	{
 		Remove(key);
 	}
+}
+
+std::ostream& operator<<(std::ostream& s, const Table& table)
+{
+	Table t = table;
+
+	s << "Table = {" << std::endl;
+
+	std::list<std::string> keys;
+	t.GetKeys(keys);
+	for (std::string k : keys)
+	{
+		s << "\t [\"" << k << "\"] = " << t.map[k]->ToString() << "," << std::endl;
+	}
+
+	s << "}" << std::endl;
+
+	return s;
 }
