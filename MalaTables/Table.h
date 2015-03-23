@@ -21,11 +21,11 @@ public:
 	void Remove(int key);
 	void RemoveAll();
 
-	/*Table operator+(Table& t);
+	Table operator+(Table& t);
 	Table operator+=(Table& t);
 	Table operator-(Table& t);
-	Table operator-=(Table& t);	*/
-	friend std::ostream& operator<<(std::ostream& s, const Table& table);
+	Table operator-=(Table& t);
+	friend std::ostream& operator<<(std::ostream& s, Table& table);
 
 	template <typename V> V Retrieve(std::string key)
 	{

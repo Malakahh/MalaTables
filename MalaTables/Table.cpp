@@ -31,7 +31,6 @@ void Table::GetKeys(std::list<std::string> &keyVector)
 
 void Table::Remove(std::string key)
 {
-	//delete map[key];
 	map.erase(key);
 	keys.remove(key);
 }
@@ -53,7 +52,7 @@ void Table::RemoveAll()
 	}
 }
 
-std::ostream& operator<<(std::ostream& s, const Table& table)
+std::ostream& operator<<(std::ostream& s, Table& table)
 {
 	Table t = table;
 
