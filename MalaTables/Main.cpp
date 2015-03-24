@@ -4,10 +4,13 @@
 
 int main() {
 
-	Test();
+	char c;
 
-	std::cout << std::endl << std::endl;
-	std::system("pause");
+	Test t;
+	t.StartTest();
+
+	std::cout << std::endl << "Press any key to exit..." << std::endl;
+	std::cin >> c;
 
 	return 0;
 }
