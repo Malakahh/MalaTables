@@ -1,5 +1,5 @@
 #include "Table.h"
-#include "TableData.cpp"
+#include "TableData.h"
 
 Table::Table()
 {
@@ -25,6 +25,7 @@ bool Table::KeyExists(const int key)
 
 void Table::GetKeys(std::list<std::string> &keyVector)
 {
+	//Make a copy of the list
 	std::list<std::string> k(keys);
 	keyVector = k;
 }
@@ -44,43 +45,65 @@ void Table::Remove(const int key)
 
 void Table::RemoveAll()
 {
-	std::list<std::string> k;
-	GetKeys(k);
-	for (std::string key : k)
-	{
-		Remove(key);
-	}
+	map.clear();
+	keys.clear();
 }
 
+Table& Table::operator+=(const Table& rhs)
+{
+	//Insert rhs
+	for (std::string k : rhs.keys)
+	{
+		if (!this->KeyExists(k)) //Key doesn't exist
+		{
+			std::unordered_map<std::string, BaseTableData*>::const_iterator got = rhs.map.find(k);
+			this->map[k] = got->second->Copy();
+			this->keys.push_back(k);
+		}
+	}
+
+	return *this;
+}
+
+Table& Table::operator-=(const Table& rhs)
+{
+	//remove from lhs
+	for (std::string k : rhs.keys)
+	{
+		if (this->KeyExists(k)) //Key exist
+		{
+			Remove(k);
+		}
+	}
+
+	return *this;
+}
 
 Table operator+(const Table& lhs, const Table& rhs)
 {
 	Table t;
 
 	//Insert lhs
-	for (std::string k : lhs.keys)
-	{
-		std::unordered_map<std::string, BaseTableData*>::const_iterator got = lhs.map.find(k);
-		t.map[k] = got->second->Copy();
-		t.keys.push_back(k);
-	}
+	t += lhs;
 
 	//Insert rhs
-	for (std::string k : rhs.keys)
-	{
-		if (lhs.map.count(k) == 0) //Key doesn't exist
-		{
-			std::unordered_map<std::string, BaseTableData*>::const_iterator got = rhs.map.find(k);
-			t.map[k] = got->second->Copy();
-			t.keys.push_back(k);
-		}
-	}
-	
-	//t.map.cbegin();
+	t += rhs;
 
 	return t;
 }
 
+Table operator-(const Table& lhs, const Table& rhs)
+{
+	Table t;
+
+	//Insert lhs
+	t += lhs;
+
+	//Remove rhs
+	t -= rhs;
+
+	return t;
+}
 
 std::ostream& operator<<(std::ostream& s, const Table& table)
 {
@@ -88,8 +111,11 @@ std::ostream& operator<<(std::ostream& s, const Table& table)
 
 	s << "{" << std::endl;
 
+	//Retrieve all keys
 	std::list<std::string> keys;
 	t.GetKeys(keys);
+
+	//Pretty print all keys value pairs
 	for (std::string k : keys)
 	{
 		s << "\t [\"" << k << "\"] = " << t.map[k]->ToString() << "," << std::endl;
@@ -98,4 +124,21 @@ std::ostream& operator<<(std::ostream& s, const Table& table)
 	s << "}";
 
 	return s;
+}
+
+Table operator<<(Table& lhs, const Table& rhs)
+{
+	//Insert rhs
+	for (std::string k : rhs.keys)
+	{
+		std::unordered_map<std::string, BaseTableData*>::const_iterator got = rhs.map.find(k);
+
+		if (lhs.KeyExists(k))
+			lhs.Remove(k);
+
+		lhs.map[k] = got->second->Copy();
+		lhs.keys.push_back(k);
+	}
+
+	return lhs;
 }
