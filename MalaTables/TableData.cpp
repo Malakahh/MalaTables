@@ -3,12 +3,13 @@
 
 #include <iostream>
 
-struct BaseTableData {
+class BaseTableData {
+public:
 	virtual std::string ToString() = 0;
 };
 
-template<typename T> struct TableData : public BaseTableData {
-//public:
+template<typename T> class TableData : public BaseTableData {
+public:
 	T data;
 
 	std::string ToString() override

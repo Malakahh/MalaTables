@@ -11,12 +11,12 @@ Table::~Table()
 	RemoveAll();
 }
 
-bool Table::KeyExists(std::string key)
+bool Table::KeyExists(const std::string key)
 {
 	return map.count(key) > 0;
 }
 
-bool Table::KeyExists(int key)
+bool Table::KeyExists(const int key)
 {
 	std::ostringstream s;
 	s << key;
@@ -29,13 +29,13 @@ void Table::GetKeys(std::list<std::string> &keyVector)
 	keyVector = k;
 }
 
-void Table::Remove(std::string key)
+void Table::Remove(const std::string key)
 {
 	map.erase(key);
 	keys.remove(key);
 }
 
-void Table::Remove(int key)
+void Table::Remove(const int key)
 {
 	std::ostringstream s;
 	s << key;
@@ -52,11 +52,26 @@ void Table::RemoveAll()
 	}
 }
 
-std::ostream& operator<<(std::ostream& s, Table& table)
+/*
+Table operator+(const Table& lhs, const Table& rhs)
+{
+	Table t;
+
+	//Insert lhs
+	std::list<std::string> keys;
+	for (std::string k : lhs.keys)
+	{
+		t.map[k] = 
+	}
+	
+}
+*/
+
+std::ostream& operator<<(std::ostream& s, const Table& table)
 {
 	Table t = table;
 
-	s << "Table = {" << std::endl;
+	s << "{" << std::endl;
 
 	std::list<std::string> keys;
 	t.GetKeys(keys);
@@ -65,7 +80,7 @@ std::ostream& operator<<(std::ostream& s, Table& table)
 		s << "\t [\"" << k << "\"] = " << t.map[k]->ToString() << "," << std::endl;
 	}
 
-	s << "}" << std::endl;
+	s << "}";
 
 	return s;
 }

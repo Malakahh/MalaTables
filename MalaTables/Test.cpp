@@ -114,6 +114,28 @@ inline bool TestRemove(Table& t)
 	return ret;
 }
 
+inline bool TestNestedTables(Table& t)
+{
+	Table tt;
+	tt.Insert<int>(1, 777);
+	tt.Insert<string>("str", "hello world!");
+	t.Insert<Table>("tt", tt);
+	cout << t << endl;
+
+	bool ret = false;
+	if (t.KeyExists("tt"))
+	{
+		ret = true;
+		cout << "table insert: success!" << endl;
+	}
+	else
+	{
+		cout << "table insert: fail" << endl;
+	}
+
+	return ret;
+}
+
 inline bool Test()
 {
 	Table t;
@@ -130,15 +152,21 @@ inline bool Test()
 	bool testRemove = TestRemove(t);
 	cout << endl;
 
+	cout << "***Testing nested tables***" << endl;
+	bool testNestedTables = TestNestedTables(t);
+	cout << endl;
+
 
 	bool total = testInsert &&
 		testGetKeys &&
-		testRemove;
+		testRemove &&
+		testNestedTables;
 	
 	cout << endl << "***Test Summary***" << endl;
 	cout << "Insert: " << testInsert << endl;
 	cout << "GetKeys: " << testGetKeys << endl;
 	cout << "Remove: " << testRemove << endl;
+	cout << "Nested tables: " << testNestedTables << endl;
 
 	cout << "Total: " << total << endl;
 

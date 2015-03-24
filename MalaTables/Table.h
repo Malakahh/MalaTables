@@ -14,20 +14,16 @@ public:
 	Table();
 	~Table();
 
-	bool KeyExists(std::string key);
-	bool KeyExists(int key);
+	#pragma region Methods
+
+	bool KeyExists(const std::string key);
+	bool KeyExists(const int key);
 	void GetKeys(std::list<std::string> &keyVector);
-	void Remove(std::string key);
-	void Remove(int key);
+	void Remove(const std::string key);
+	void Remove(const int key);
 	void RemoveAll();
 
-	Table operator+(Table& t);
-	Table operator+=(Table& t);
-	Table operator-(Table& t);
-	Table operator-=(Table& t);
-	friend std::ostream& operator<<(std::ostream& s, Table& table);
-
-	template <typename V> V Retrieve(std::string key)
+	template <typename V> V Retrieve(const std::string key)
 	{
 		std::unordered_map<std::string, BaseTableData*>::const_iterator got = map.find(key);
 		TableData<V>* td = (TableData<V>*)got->second;
@@ -35,14 +31,14 @@ public:
 		return data;
 	}
 
-	template <typename V> V Retrieve(int key)
+	template <typename V> V Retrieve(const int key)
 	{
 		std::ostringstream s;
 		s << key;
 		return Retrieve<V>(s.str());
 	}
 
-	template <typename V> void Insert(std::string key, V value)
+	template <typename V> void Insert(const std::string key, const V value)
 	{
 		TableData<V>* tableData = new TableData<V>;
 		tableData->data = value;
@@ -56,12 +52,32 @@ public:
 		keys.push_back(key);
 	}
 
-	template <typename V> void Insert(int key, V value)
+	template <typename V> void Insert(const int key, const V value)
 	{
 		std::ostringstream s;
 		s << key;
 		Insert<V>(s.str(), value);
 	}
+
+	#pragma endregion
+	#pragma region OperatorOverloads
+
+	/*
+		Inserts all entries from rhs into lhs without overwriting existing keys.
+	*/
+	friend Table operator+(const Table& lhs, const Table& rhs);
+	friend Table operator-(const Table& lhs, const Table& rhs);
+
+	/*
+		Writes to an output stream, i.e. std::cout.
+	*/
+	friend std::ostream& operator<<(std::ostream& s, const Table& table);
+
+
+	friend Table operator<<(Table& lhs, const Table& ths);
+	Table operator+=(const Table& t);
+	Table operator-=(const Table& t);
+	#pragma endregion
 };
 
 #endif
