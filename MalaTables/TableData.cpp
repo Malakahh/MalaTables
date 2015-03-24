@@ -20,7 +20,7 @@ public:
 	}
 };
 
-template<typename T> std::ostream& operator<<(std::ostream& s, TableData<T>& td)
+template<typename T> std::ostream& operator<<(std::ostream& s, const TableData<T>& td)
 {
 	s << td.ToString();
 	return s;
