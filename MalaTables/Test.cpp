@@ -136,6 +136,73 @@ inline bool TestNestedTables(Table& t)
 	return ret;
 }
 
+inline bool TestTableAddition()
+{
+	Table t, t1, t2;
+	
+	t1.Insert<string>(1, "one");
+	t1.Insert<string>(2, "two");
+	t1.Insert<string>(3, "three");
+	
+	t2.Insert<string>(3, "three in t2");
+	t2.Insert<string>(4, "four");
+
+
+	cout << "t1 = " << t1 << endl;
+	cout << "t2 = " << t2 << endl;
+	cout << "performaing addition..." << endl;
+	
+	t = t1 + t2;
+	cout << "t = " << t << endl;
+	
+	bool ret = true;
+	/*
+	if (t.KeyExists(1) && t.Retrieve<string>(1) == "one")
+	{
+		cout << "hi: 1" << endl;
+	}
+
+	if (t.KeyExists(2) && t.Retrieve<string>(2) == "two")
+	{
+		cout << "hi: 2" << endl;
+	}
+
+	if (t.KeyExists(3) && t.Retrieve<string>(3) == "three")
+	{
+		cout << "hi: 3" << endl;
+	}
+
+	if (t.KeyExists(4) && t.Retrieve<string>(4) == "four")
+	{
+		cout << "hi: 4" << endl;
+	}*/
+
+	if (!(t.KeyExists(1) && t.Retrieve<string>(1) == "one" &&
+		t.KeyExists(2) && t.Retrieve<string>(2) == "two" &&
+		t.KeyExists(3) && t.Retrieve<string>(3) == "three" &&
+		t.KeyExists(4) && t.Retrieve<string>(4) == "four"))
+	{
+		ret = false;
+	}
+
+	cout << "altering key 1..." << endl;
+	t.Insert<string>(1, "onetyone");
+	cout << t << endl;
+
+	if (!(ret && t.KeyExists(1) && t.Retrieve<string>(1) == "onetyone") && //We have altered new object
+		(t1.KeyExists(1) && t1.Retrieve<string>(1) == "one")) //Without altering the old one
+	{
+		ret = false;
+		cout << "fail" << endl;
+	}
+	else
+	{
+		cout << "Success!" << endl;
+	}
+
+	return ret;
+}
+
 inline bool Test()
 {
 	Table t;
@@ -156,17 +223,22 @@ inline bool Test()
 	bool testNestedTables = TestNestedTables(t);
 	cout << endl;
 
+	cout << "***Testing table Addition***" << endl;
+	bool testTableAddition = TestTableAddition();
+	cout << endl;
 
 	bool total = testInsert &&
 		testGetKeys &&
 		testRemove &&
-		testNestedTables;
+		testNestedTables &&
+		testTableAddition;
 	
 	cout << endl << "***Test Summary***" << endl;
 	cout << "Insert: " << testInsert << endl;
 	cout << "GetKeys: " << testGetKeys << endl;
 	cout << "Remove: " << testRemove << endl;
 	cout << "Nested tables: " << testNestedTables << endl;
+	cout << "Table Addition: " << testTableAddition << endl;
 
 	cout << "Total: " << total << endl;
 

@@ -52,20 +52,35 @@ void Table::RemoveAll()
 	}
 }
 
-/*
+
 Table operator+(const Table& lhs, const Table& rhs)
 {
 	Table t;
 
 	//Insert lhs
-	std::list<std::string> keys;
 	for (std::string k : lhs.keys)
 	{
-		t.map[k] = 
+		std::unordered_map<std::string, BaseTableData*>::const_iterator got = lhs.map.find(k);
+		t.map[k] = got->second->Copy();
+		t.keys.push_back(k);
+	}
+
+	//Insert rhs
+	for (std::string k : rhs.keys)
+	{
+		if (lhs.map.count(k) == 0) //Key doesn't exist
+		{
+			std::unordered_map<std::string, BaseTableData*>::const_iterator got = rhs.map.find(k);
+			t.map[k] = got->second->Copy();
+			t.keys.push_back(k);
+		}
 	}
 	
+	//t.map.cbegin();
+
+	return t;
 }
-*/
+
 
 std::ostream& operator<<(std::ostream& s, const Table& table)
 {

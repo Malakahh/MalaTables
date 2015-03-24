@@ -6,10 +6,14 @@
 class BaseTableData {
 public:
 	virtual std::string ToString() = 0;
+	virtual BaseTableData* Copy() = 0;
 };
 
 template<typename T> class TableData : public BaseTableData {
 public:
+	TableData<T>(const T data) : data(data) {}
+	~TableData<T>();
+
 	T data;
 
 	std::string ToString() override
@@ -17,6 +21,12 @@ public:
 		std::ostringstream s;
 		s << data;
 		return s.str();
+	}
+
+	BaseTableData* Copy() override
+	{
+		TableData<T>* t = new TableData<T>(data);
+		return t;
 	}
 };
 

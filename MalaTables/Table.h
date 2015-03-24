@@ -40,8 +40,7 @@ public:
 
 	template <typename V> void Insert(const std::string key, const V value)
 	{
-		TableData<V>* tableData = new TableData<V>;
-		tableData->data = value;
+		TableData<V>* tableData = new TableData<V>(value);
 
 		if (KeyExists(key))
 		{
