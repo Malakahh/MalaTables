@@ -1,13 +1,18 @@
 #include "Table.h"
-#include "Test.cpp"
+#include "Test.h"
 #include <iostream>
+
+bool MyCompare(int a, int b)
+{
+	return a == b;
+}
 
 int main() {
 
 	char c;
 
 	Test t;
-	t.StartTest();
+	t.StartTest(MyCompare);
 
 	std::cout << std::endl << "Press any key to exit..." << std::endl;
 	std::cin >> c;

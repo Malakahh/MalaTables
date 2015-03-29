@@ -14,6 +14,7 @@
     <ClInclude Include="BaseTableData.h" />
     <ClInclude Include="Table.h" />
     <ClInclude Include="TableData.h" />
+    <ClInclude Include="Test.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
